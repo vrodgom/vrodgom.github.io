@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Merger Trees</title>
+  <link rel="stylesheet" href="treestyle.css">
+</head>
+
+<body>
+  <div id="banner"></div>
+  <div id="header">
+    <div id="illustris_bar">
+      <h1 style="position:relative; left:10px;">Illustris Merger Trees</h1>
+    </div>
+  </div>
+
+  <div id="main_container">
+
+    <ul class="navbar_left">
+      <li><a href="../index.html">Back to Home</a></li>
+      <li><a href="index.html">Introduction</a></li>
+      <li><a href="sublink_format.html">Tree Format</a></li>
+      <li><a href="sublink_location.html">Tree Location</a></li>
+      <li><a href="examples.html">Examples</a></li>
+    </ul>
+
+
+    <div id="normal_text">
+      <h1>Tree Format</h1>
+
+      <p>
+
+      The subhalo merger trees come in two formats: <i>minimal</i> and <i>extended</i>. The <i>minimal</i> format contains the pointers between subhalos, along with a few basic quantities such as the subhalo mass and the number of particles. The <i>extended</i> format contains all of these fields, plus every subhalo field found in the subhalo catalogs.
+
+      <br/>
+      <br/>
+
+      Also, there are two flavors of merger trees: DM-only and baryonic. As the name suggests, the DM-only trees only track the dark matter (DM) particles, while the baryonic trees track all the stellar particles <i>plus</i> the star-forming gas particles.
+
+      <br/>
+      <br/>
+
+      For convenience, subhalo offset tables are also provided for each snapshot.
+
+      <br/>
+      <br/>
+
+      <a href="#minimal">Minimal format</a>
+      <br/>
+      <a href="#extended">Extended format</a>
+      <br/>
+      <a href="#offsets">Offset tables</a>
+      <br/>
+      <hr></hr>
+
+      <a name="minimal">
+      <h2>Minimal format</h2>
+
+
+      <center>
+
+      <img src="tree_structure.png" alt="Basic pointers found in the merger tree" width=80%></img>
+
+      <br></br>
+
+      <i>Figure 1.</i> The structure of the tree is very similar to the one described in Springel et al. (2005). Note that some arrows have been added to the original figure.
+
+      <br></br>
+      <br></br>
+
+
+      <table border="0" style="background-color:#444444" width="800" cellpadding="5" cellspacing="0">
+        <tr style="background-color:#77bbff; color:black">
+          <td>Column</td>
+          <td>Type</td>
+          <td>Units</td>
+          <td>Description</td>
+        </tr>
+        <tr>
+          <td>SubhaloID</td>
+          <td>int64</td>
+          <td></td>
+          <td>Unique identifier of this subhalo, assigned in a "depth-first" fashion (Lemson & Springel 2006).</td>
+        </tr>
+        <tr>
+          <td>SubhaloIDRaw</td>
+          <td>int64</td>
+          <td></td>
+          <td>Unique identifier of this subhalo, in raw format (= SnapNum*10^12 + SubfindID).</td>
+        </tr>
+        <tr>
+          <td>LastProgenitorID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the last progenitor of the merger tree rooted in this subhalo. Since the subhalo IDs are assigned in a "depth-first" order, all the subhalos contained in the tree rooted in this subhalo are the ones with IDs between SubhaloID and LastProgenitorID.</td>
+        </tr>
+        <tr>
+          <td>MainLeafProgenitorID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the last progenitor along the main branch, i.e. the earliest progenitor obtained by following the FirstProgenitorID pointer.</td>
+        </tr>
+        <tr>
+          <td>RootDescendantID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the latest descendant of this subhalo, i.e. the root of the merger tree to which this subhalo belongs.</td>
+        </tr>
+        <tr>
+          <td>TreeID</td>
+          <td>int64</td>
+          <td></td>
+          <td>Identifier of the tree to which this subhalo belongs. In most cases, this identifier corresponds to the SubfindID of the subhalo from the latest snapshot in which this tree is rooted.</td>
+        </tr>
+        <tr>
+          <td>SnapNum</td>
+          <td>int16</td>
+          <td></td>
+          <td>The snapshot in which this subhalo was found.</td>
+        </tr>
+        <tr>
+          <td>FirstProgenitorID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the subhalo's first progenitor, if any (-1 otherwise). The first progenitor is the one with the "most massive history" behind it (e.g. De Lucia & Blaizot 2007).</td>
+        </tr>
+        <tr>
+          <td>NextProgenitorID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the next subhalo from the same snapshot which shares the same descendant, if any (-1 otherwise).</td>
+        </tr>
+        <tr>
+          <td>DescendantID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the subhalo's descendant, if any (-1 otherwise).</td>
+        </tr>
+        <tr>
+          <td>FirstSubhaloInFOFGroupID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the main subhalo (i.e. the one with the "most massive history") from the same FOF group.</td>
+        </tr>
+        <tr>
+          <td>NextSubhaloInFOFGroupID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the next subhalo from the same FOF group.</td>
+        </tr>
+        <tr>
+          <td>NumParticles</td>
+          <td>uint32</td>
+          <td></td>
+          <td>Number of particles in the current subhalo, including only particles of interest to the current tree (e.g. DM-only or stars + star-forming gas).</td>
+        </tr>
+        <tr>
+          <td>Mass</td>
+          <td>float32</td>
+          <td>10^10 Msun/h</td>
+          <td>Mass of the current subhalo. For the DM-only trees, this is the DM mass. For the baryonic trees, this is the stellar mass <i>plus</i> the star-forming gas mass.</td>
+        </tr>
+        <tr>
+          <td>MassHistory</td>
+          <td>float32</td>
+          <td>10^10 Msun/h</td>
+          <td>Sum of the masses of the progenitors along the main branch (De Lucia & Blaizot 2007).</td>
+        </tr>
+        <tr>
+          <td>SubfindID</td>
+          <td>int32</td>
+          <td></td>
+          <td>Index of this subhalo in the snapshot catalog.</td>
+        </tr>
+        
+      </table>
+      </center>
+
+      <hr>
+      <br/>
+      <a name="extended">
+      <h2>Extended format</h2>
+
+      This format consists of all the columns from the minimal format, plus all the subhalo fields found in the SUBFIND catalogs.
+
+      <hr>
+      <br/>
+
+      <a name="offsets">
+      <h2>Offset tables</h2>
+
+      For each snapshot, there is a file inside the <i>offsets</i> subdirectory that contains the subhalo offsets in the merger tree, arranged in depth-first fashion so that each row corresponds to a unique subhalo in the merger tree. An example of how to use the offset files is provided in <a href="examples.html#example6">Example 6</a>.
+      
+      <br></br>
+      
+      <table border="0" style="background-color:#444444" width="800" cellpadding="5" cellspacing="0">
+        <tr style="background-color:#77bbff; color:black">
+          <td>Column</td>
+          <td>Type</td>
+          <td>Units</td>
+          <td>Description</td>
+        </tr>
+        <tr>
+          <td>FileOffsets</td>
+          <td>int64</td>
+          <td></td>
+          <td>Offset of the current tree file with respect to the <i>full</i> merger tree.</td>
+        </tr>
+        <tr>
+          <td>RowNum</td>
+          <td>int64</td>
+          <td></td>
+          <td>Row number in the <i>full</i> merger tree.</td>
+        </tr>
+        <tr>
+          <td>SubhaloID</td>
+          <td>int64</td>
+          <td></td>
+          <td>Unique identifier of this subhalo, assigned in a "depth-first" fashion (Lemson & Springel 2006).</td>
+        </tr>
+        <tr>
+          <td>LastProgenitorID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the last progenitor of the merger tree rooted in this subhalo. Since the subhalo IDs are assigned in a "depth-first" order, all the subhalos contained in the tree rooted in this subhalo are the ones with IDs between SubhaloID and LastProgenitorID.</td>
+        </tr>
+        <tr>
+          <td>MainLeafProgenitorID</td>
+          <td>int64</td>
+          <td></td>
+          <td>The ID of the last progenitor along the main branch, i.e. the earliest progenitor obtained by following the FirstProgenitorID pointer.</td>
+        </tr>
+        
+      </table>
+      </center>
+
+      <br></br>
+      
+    </div>
+  </div>
+
+</body>
+</html>
+
+

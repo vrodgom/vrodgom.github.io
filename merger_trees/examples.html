@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Merger Trees</title>
+  <link rel="stylesheet" href="treestyle.css">
+</head>
+
+<body>
+  <div id="banner"></div>
+  <div id="header">
+    <div id="illustris_bar">
+      <h1 style="position:relative; left:10px;">Illustris Merger Trees</h1>
+    </div>
+  </div>
+
+  <div id="main_container">
+
+    <ul class="navbar_left">
+      <li><a href="../index.html">Back to Home</a></li>
+      <li><a href="index.html">Introduction</a></li>
+      <li><a href="sublink_format.html">Tree Format</a></li>
+      <li><a href="sublink_location.html">Tree Location</a></li>
+      <li><a href="examples.html">Examples</a></li>
+    </ul>
+
+    <div id="normal_text">
+
+      <h1>Examples</h1>
+      
+      
+      The examples shown here, except for the last one, use built-in functions found in readtreeHDF5.py, such as:
+      
+      <ul>
+      <li>get_main_branch</li>
+      <li>get_all_progenitors</li>
+      <li>get_all_progenitors_of_root_descendant</li>
+      <li>get_subhalos_between_root_and_given</li>
+      <li>get_direct_progenitors</li>
+      <li>get_all_fellow_progenitors</li>
+      <li>get_future_branch</li>
+      </ul>
+      
+      The names of these functions attempt to be self-explanatory, but brief descriptions can be found inside the code.
+      <br></br>      
+      The Python script for reading trees in "database mode" can be found here:
+      <br></br>
+      /n/home10/vrodrigu/Python/PythonModules/OwnModules/readtreeHDF5.py
+
+      <a name="example1">
+      <h2>Example 1</h2>
+
+      Print the snapshot number, stellar mass, and star formation rate along the main branch of a subhalo. Note that the <i>keysel</i> argument is used to specify which fields from the Subfind catalogs should be loaded.
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">readtreeHDF5</span>
+<span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/Subhalos/Illustris/L75n1820FP&#39;</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">readtreeHDF5</span><span class="o">.</span><span class="n">TreeDB</span><span class="p">(</span><span class="n">treedir</span><span class="p">)</span>
+<span class="n">snapnum</span> <span class="o">=</span> <span class="mi">135</span><span class="p">;</span> <span class="n">subfind_id</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_main_branch</span><span class="p">(</span><span class="n">snapnum</span><span class="p">,</span> <span class="n">subfind_id</span><span class="p">,</span> <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;SnapNum&#39;</span><span class="p">,</span> <span class="s">&#39;SubhaloMassType&#39;</span><span class="p">,</span> <span class="s">&#39;SubhaloSFR&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">nrows</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">branch</span><span class="o">.</span><span class="n">SnapNum</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">branch</span><span class="o">.</span><span class="n">SubhaloMassType</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">branch</span><span class="o">.</span><span class="n">SubhaloSFR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+
+Output:
+
+<div class="highlight"><pre><span class="mi">135</span> <span class="mf">45.3308</span> <span class="mf">0.0147863</span>
+<span class="mi">134</span> <span class="mf">43.7982</span> <span class="mf">0.00618325</span>
+<span class="mi">133</span> <span class="mf">43.8464</span> <span class="mf">0.00186112</span>
+<span class="mi">132</span> <span class="mf">43.9853</span> <span class="mf">0.000374569</span>
+<span class="mi">131</span> <span class="mf">44.4113</span> <span class="mf">0.0</span>
+<span class="mi">130</span> <span class="mf">43.6553</span> <span class="mf">0.0</span>
+<span class="mi">129</span> <span class="mf">43.3827</span> <span class="mf">0.0125876</span>
+<span class="mi">128</span> <span class="mf">43.4569</span> <span class="mf">0.00529478</span>
+<span class="mi">127</span> <span class="mf">43.8315</span> <span class="mf">0.0531274</span>
+<span class="mi">126</span> <span class="mf">44.6463</span> <span class="mf">0.0441715</span>
+<span class="o">...</span>
+
+<span class="mi">32</span> <span class="mf">0.00580271</span> <span class="mf">0.921094</span>
+<span class="mi">31</span> <span class="mf">0.00488859</span> <span class="mf">0.643712</span>
+<span class="mi">30</span> <span class="mf">0.00330759</span> <span class="mf">0.392984</span>
+<span class="mi">29</span> <span class="mf">0.00213915</span> <span class="mf">0.409696</span>
+<span class="mi">28</span> <span class="mf">0.00106858</span> <span class="mf">0.427845</span>
+<span class="mi">27</span> <span class="mf">0.000718658</span> <span class="mf">0.217374</span>
+<span class="mi">26</span> <span class="mf">7.60092e-05</span> <span class="mf">0.0669792</span>
+<span class="mi">25</span> <span class="mf">0.0</span> <span class="mf">0.0309659</span>
+<span class="mi">24</span> <span class="mf">0.0</span> <span class="mf">0.0147244</span>
+<span class="mi">23</span> <span class="mf">0.0</span> <span class="mf">0.00386036</span>
+<span class="mi">22</span> <span class="mf">0.0</span> <span class="mf">0.00178407</span>
+</pre></div>
+
+      <a name="example2">
+      <h2>Example 2</h2>
+
+      Print the total masses of the direct progenitors of a given subhalo.
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">readtreeHDF5</span>
+<span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/Subhalos/Illustris/L75n1820FP&#39;</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">readtreeHDF5</span><span class="o">.</span><span class="n">TreeDB</span><span class="p">(</span><span class="n">treedir</span><span class="p">)</span>
+<span class="n">snapnum</span> <span class="o">=</span> <span class="mi">85</span><span class="p">;</span> <span class="n">subfind_id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">progs</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_direct_progenitors</span><span class="p">(</span><span class="n">snapnum</span><span class="p">,</span> <span class="n">subfind_id</span><span class="p">,</span> <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;SubhaloMass&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="n">progs</span><span class="o">.</span><span class="n">SubhaloMass</span>
+</pre></div>
+
+      Output:
+
+<div class="highlight"><pre><span class="p">[</span>  <span class="mf">5.46660938e+03</span>   <span class="mf">8.42722225e+00</span>   <span class="mf">5.96577488e-02</span>   <span class="mf">2.98375543e-02</span>
+   <span class="mf">1.33459726e-02</span>   <span class="mf">1.75941736e-01</span>   <span class="mf">1.58780679e-01</span>   <span class="mf">2.00215373e-02</span>
+   <span class="mf">1.11011732e-02</span>   <span class="mf">7.78871588e-03</span>   <span class="mf">1.76827796e-02</span>   <span class="mf">1.54313780e-02</span>
+   <span class="o">...</span><span class="p">,</span>
+   <span class="mf">8.81793071e-03</span>   <span class="mf">8.81793071e-03</span>   <span class="mf">8.81793071e-03</span>   <span class="mf">8.81793071e-03</span>
+   <span class="mf">8.81793071e-03</span>   <span class="mf">8.81793071e-03</span>   <span class="mf">5.48702031e-02</span>   <span class="mf">2.28373185e-02</span>
+   <span class="mf">1.89679563e-01</span>   <span class="mf">5.13658077e-02</span><span class="p">]</span>
+</pre></div>
+
+      <a name="example3">
+      <h2>Example 3</h2>
+
+      For a given subhalo, count the number of progenitors at redshift z=3 (snapshot 60), each with total mass greater than 10^12 Msun/h.
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">readtreeHDF5</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/Subhalos/Illustris/L75n1820FP&#39;</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">readtreeHDF5</span><span class="o">.</span><span class="n">TreeDB</span><span class="p">(</span><span class="n">treedir</span><span class="p">)</span>
+<span class="n">snapnum</span> <span class="o">=</span> <span class="mi">135</span><span class="p">;</span> <span class="n">subfind_id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">subtree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_all_progenitors</span><span class="p">(</span><span class="n">snapnum</span><span class="p">,</span> <span class="n">subfind_id</span><span class="p">,</span> <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;SnapNum&#39;</span><span class="p">,</span> <span class="s">&#39;SubhaloMass&#39;</span><span class="p">])</span>
+<span class="n">bool_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">subtree</span><span class="o">.</span><span class="n">SnapNum</span> <span class="o">==</span> <span class="mi">60</span><span class="p">,</span> <span class="n">subtree</span><span class="o">.</span><span class="n">SubhaloMass</span> <span class="o">&gt;</span> <span class="mf">100.0</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">bool_indices</span><span class="p">)</span>
+</pre></div>
+
+
+      Output:
+
+<div class="highlight"><pre>
+
+<span class="mi">5</span>
+
+</pre></div>
+
+
+      <a name="example4">
+      <h2>Example 4</h2>
+
+      Print the gas fraction along the "future" branch of a subhalo, i.e. following the descendant links.
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">readtreeHDF5</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/Subhalos/Illustris/L75n1820FP&#39;</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">readtreeHDF5</span><span class="o">.</span><span class="n">TreeDB</span><span class="p">(</span><span class="n">treedir</span><span class="p">)</span>
+<span class="n">snapnum</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span> <span class="n">subfind_id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_future_branch</span><span class="p">(</span><span class="n">snapnum</span><span class="p">,</span> <span class="n">subfind_id</span><span class="p">,</span> <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;SubhaloMassType&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="n">branch</span><span class="o">.</span><span class="n">SubhaloMassType</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">SubhaloMassType</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">branch</span><span class="o">.</span><span class="n">SubhaloMassType</span><span class="p">[:,</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+
+      Output:
+
+<div class="highlight"><pre><span class="p">[</span> <span class="mf">0.81863177</span>  <span class="mf">0.817384</span>    <span class="mf">0.81635791</span>  <span class="mf">0.81488973</span>  <span class="mf">0.81344718</span>  <span class="mf">0.8120001</span>
+  <span class="mf">0.80800343</span>  <span class="mf">0.80775136</span>  <span class="mf">0.81137735</span>  <span class="mf">0.80887872</span>  <span class="mf">0.81680244</span>  <span class="mf">0.81997812</span>
+  <span class="mf">0.8095147</span>   <span class="mf">0.81191099</span>  <span class="mf">0.81993639</span>  <span class="mf">0.82624286</span>  <span class="mf">0.82041419</span>  <span class="mf">0.81541157</span>
+  <span class="o">...</span><span class="p">,</span>
+  <span class="mf">0.5013082</span>   <span class="mf">0.49303648</span>  <span class="mf">0.52275819</span>  <span class="mf">0.4496251</span>   <span class="mf">0.57909721</span>  <span class="mf">0.48233721</span>
+  <span class="mf">0.58357298</span>  <span class="mf">0.65957606</span>  <span class="mf">0.68540359</span>  <span class="mf">0.71993554</span>  <span class="mf">0.72716904</span>  <span class="mf">0.77929348</span>
+  <span class="mf">0.85557771</span>  <span class="mf">0.8851701</span>   <span class="mf">0.88132364</span><span class="p">]</span>
+</pre></div>
+
+
+      <a name="example5">
+      <h2>Example 5</h2>
+
+      For a given subhalo, get all the subhalos from the same redshift that will eventually merge into the same object, and print their spatial location.
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">readtreeHDF5</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/Subhalos/Illustris/L75n1820FP&#39;</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">readtreeHDF5</span><span class="o">.</span><span class="n">TreeDB</span><span class="p">(</span><span class="n">treedir</span><span class="p">)</span>
+<span class="n">snapnum</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span> <span class="n">subfind_id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">progs</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_all_fellow_progenitors</span><span class="p">(</span><span class="n">snapnum</span><span class="p">,</span> <span class="n">subfind_id</span><span class="p">,</span> <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;SubhaloPos&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="n">progs</span><span class="o">.</span><span class="n">SubhaloPos</span>
+</pre></div>
+
+      Output:
+
+<div class="highlight"><pre><span class="p">[[</span> <span class="mf">10846.50585938</span>  <span class="mf">50886.3203125</span>   <span class="mf">47641.7109375</span> <span class="p">]</span>
+ <span class="p">[</span> <span class="mf">10823.27441406</span>  <span class="mf">50902.71484375</span>  <span class="mf">47633.87890625</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">10791.67773438</span>  <span class="mf">50926.61328125</span>  <span class="mf">47626.51171875</span><span class="p">]</span>
+ <span class="o">...</span><span class="p">,</span> 
+ <span class="p">[</span>  <span class="mf">9674.72363281</span>  <span class="mf">51196.58984375</span>  <span class="mf">47535.7421875</span> <span class="p">]</span>
+ <span class="p">[</span> <span class="mf">11676.44042969</span>  <span class="mf">51291.84765625</span>  <span class="mf">48374.8984375</span> <span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">9742.10644531</span>  <span class="mf">50317.2109375</span>   <span class="mf">48392.4296875</span> <span class="p">]]</span>
+</pre></div>
+
+      <a name="example6">
+      <h2>Example 6</h2>
+
+      This last example does *not* make use of the reading script readtreeHDF5.py. Instead, it accesses the merger trees and offsets tables directly using PyTables. For a list of subhalos, we print the maximum DM mass they have ever had, along with the corresponding snapshot numbers.
+      
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tables</span>
+
+<span class="c"># Constants</span>
+<span class="n">snapnum_last</span> <span class="o">=</span> <span class="mi">135</span>
+<span class="n">nsnaps</span> <span class="o">=</span> <span class="n">snapnum_last</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">parttype</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c"># DM particles</span>
+
+<span class="c"># List of subhalo indices at z=0</span>
+<span class="n">subfind_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">num_subs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">subfind_ids</span><span class="p">)</span>
+
+<span class="c"># Store maximum masses and snapshot numbers here:</span>
+<span class="n">max_masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_subs</span><span class="p">)</span>
+<span class="n">snap_numbers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_subs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+<span class="c"># Directory with the merger tree files</span>
+<span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/Subhalos/Illustris/L75n1820FP&#39;</span>
+
+<span class="c"># Open merger tree and offsets files</span>
+<span class="n">f_tree</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">/tree_extended.hdf5&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">treedir</span><span class="p">))</span>
+<span class="n">f_offsets</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">/offsets/offsets_</span><span class="si">%s</span><span class="s">.hdf5&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">treedir</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">snapnum_last</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+
+<span class="c"># Get subhalo row numbers from offsets table,</span>
+<span class="c"># as well as the necessary info for extracting main branches</span>
+<span class="n">row_num</span> <span class="o">=</span> <span class="n">f_offsets</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">RowNum</span><span class="p">[:]</span>
+<span class="n">subhalo_id</span> <span class="o">=</span> <span class="n">f_offsets</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">SubhaloID</span><span class="p">[:]</span>
+<span class="n">main_leaf_progenitor_id</span> <span class="o">=</span> <span class="n">f_offsets</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">MainLeafProgenitorID</span><span class="p">[:]</span>
+
+<span class="c"># Now, for each subhalo in the list, get all the progenitors along</span>
+<span class="c"># the main branch and identify the most massive one.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_subs</span><span class="p">):</span>
+    <span class="c"># Get the masses and snapshot numbers along the main branch</span>
+    <span class="n">sub_index</span> <span class="o">=</span> <span class="n">subfind_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">main_branch_length</span> <span class="o">=</span> <span class="n">main_leaf_progenitor_id</span><span class="p">[</span><span class="n">sub_index</span><span class="p">]</span> <span class="o">-</span> <span class="n">subhalo_id</span><span class="p">[</span><span class="n">sub_index</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">locs</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">row_num</span><span class="p">[</span><span class="n">sub_index</span><span class="p">],</span> <span class="n">row_num</span><span class="p">[</span><span class="n">sub_index</span><span class="p">]</span> <span class="o">+</span> <span class="n">main_branch_length</span><span class="p">)</span>
+    <span class="n">masses</span> <span class="o">=</span> <span class="n">f_tree</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">SubhaloMassType</span><span class="p">[</span><span class="n">locs</span><span class="p">,</span> <span class="n">parttype</span><span class="p">]</span>
+    <span class="n">snapnums</span> <span class="o">=</span> <span class="n">f_tree</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">SnapNum</span><span class="p">[</span><span class="n">locs</span><span class="p">]</span>
+
+    <span class="c"># Get max. mass and the corresponding snapshot number</span>
+    <span class="n">max_mass</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">max_snapnum</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">mass</span><span class="p">,</span> <span class="n">snapnum</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">masses</span><span class="p">,</span> <span class="n">snapnums</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">mass</span> <span class="o">&gt;</span> <span class="n">max_mass</span><span class="p">:</span>
+            <span class="n">max_mass</span> <span class="o">=</span> <span class="n">mass</span>
+            <span class="n">max_snapnum</span> <span class="o">=</span> <span class="n">snapnum</span>
+
+    <span class="c"># Save to arrays</span>
+    <span class="n">max_masses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_mass</span>
+    <span class="n">snap_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_snapnum</span>
+
+<span class="c"># Close files</span>
+<span class="n">f_tree</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f_offsets</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># Write results to file (masses in units of 10^10 Msun/h)</span>
+<span class="k">print</span> <span class="s">&#39;# subfind_id, max_mass [10^10 Msun/h], snapnum&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_subs</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s">,</span><span class="si">%f</span><span class="s">,</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subfind_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">max_masses</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">snap_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+
+      Output:
+
+<div class="highlight"><pre><span class="c"># subfind_id, max_mass (10^10 Msun/h), snapnum</span>
+<span class="mi">0</span><span class="p">,</span><span class="mf">20122.097656</span><span class="p">,</span><span class="mi">135</span>
+<span class="mi">1</span><span class="p">,</span><span class="mf">2290.834961</span><span class="p">,</span><span class="mi">131</span>
+<span class="mi">2</span><span class="p">,</span><span class="mf">2165.381348</span><span class="p">,</span><span class="mi">119</span>
+<span class="mi">3</span><span class="p">,</span><span class="mf">336.076477</span><span class="p">,</span><span class="mi">123</span>
+<span class="mi">4</span><span class="p">,</span><span class="mf">546.109863</span><span class="p">,</span><span class="mi">100</span>
+<span class="mi">5</span><span class="p">,</span><span class="mf">296.441620</span><span class="p">,</span><span class="mi">133</span>
+<span class="o">...</span>
+<span class="mi">994</span><span class="p">,</span><span class="mf">0.474405</span><span class="p">,</span><span class="mi">118</span>
+<span class="mi">995</span><span class="p">,</span><span class="mf">10.420149</span><span class="p">,</span><span class="mi">83</span>
+<span class="mi">996</span><span class="p">,</span><span class="mf">0.653409</span><span class="p">,</span><span class="mi">102</span>
+<span class="mi">997</span><span class="p">,</span><span class="mf">0.378289</span><span class="p">,</span><span class="mi">129</span>
+<span class="mi">998</span><span class="p">,</span><span class="mf">0.708962</span><span class="p">,</span><span class="mi">106</span>
+<span class="mi">999</span><span class="p">,</span><span class="mf">0.441778</span><span class="p">,</span><span class="mi">111</span>
+</pre></div>
+
+      <a name="example7">
+      <h2>Example 7</h2>
+
+      Count the number of major mergers that the first 20 central subhalos have ever had (the script readsubfHDF5.py can be found at /n/home12/mvogelsberger/Python/OwnModules/). The mass ratio is determined by the maximum past stellar mass of the two progenitors.
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">readtreeHDF5</span>
+<span class="kn">import</span> <span class="nn">readsubfHDF5</span>
+
+<span class="k">def</span> <span class="nf">get_maximum_past_mass</span><span class="p">(</span><span class="n">subtree</span><span class="p">,</span> <span class="n">rownum</span><span class="p">):</span>
+    <span class="c"># Get maximum past *stellar* mass of a subhalo</span>
+    <span class="n">parttype</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">branch_length</span> <span class="o">=</span> <span class="p">(</span><span class="n">subtree</span><span class="o">.</span><span class="n">MainLeafProgenitorID</span><span class="p">[</span><span class="n">rownum</span><span class="p">]</span> <span class="o">-</span>
+                     <span class="n">subtree</span><span class="o">.</span><span class="n">SubhaloID</span><span class="p">[</span><span class="n">rownum</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">locs</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">rownum</span><span class="p">,</span> <span class="n">rownum</span> <span class="o">+</span> <span class="n">branch_length</span><span class="p">)</span>
+    <span class="n">masses</span> <span class="o">=</span> <span class="n">subtree</span><span class="o">.</span><span class="n">SubhaloMassType</span><span class="p">[</span><span class="n">locs</span><span class="p">,</span> <span class="n">parttype</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">count_major_mergers</span><span class="p">(</span><span class="n">subtree</span><span class="p">,</span> <span class="n">major_merger_ratio</span><span class="p">):</span>
+    <span class="n">num_major_mergers</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">root_sub_rownum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">root_sub_id</span> <span class="o">=</span> <span class="n">subtree</span><span class="o">.</span><span class="n">SubhaloID</span><span class="p">[</span><span class="n">root_sub_rownum</span><span class="p">]</span>
+
+    <span class="c"># Iterate over &quot;first progenitor&quot; links (along main branch)</span>
+    <span class="n">first_prog_id</span> <span class="o">=</span> <span class="n">subtree</span><span class="o">.</span><span class="n">FirstProgenitorID</span><span class="p">[</span><span class="n">root_sub_rownum</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">first_prog_id</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">first_prog_rownum</span> <span class="o">=</span> <span class="n">root_sub_rownum</span> <span class="o">+</span> <span class="p">(</span><span class="n">first_prog_id</span> <span class="o">-</span> <span class="n">root_sub_id</span><span class="p">)</span>
+        <span class="n">first_prog_maxmass</span> <span class="o">=</span> <span class="n">get_maximum_past_mass</span><span class="p">(</span><span class="n">subtree</span><span class="p">,</span> <span class="n">first_prog_rownum</span><span class="p">)</span>
+
+        <span class="c"># Iterate over &quot;next progenitor&quot; links</span>
+        <span class="n">next_prog_id</span> <span class="o">=</span> <span class="n">subtree</span><span class="o">.</span><span class="n">NextProgenitorID</span><span class="p">[</span><span class="n">first_prog_rownum</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">next_prog_id</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">next_prog_rownum</span> <span class="o">=</span> <span class="n">root_sub_rownum</span> <span class="o">+</span> <span class="p">(</span><span class="n">next_prog_id</span> <span class="o">-</span> <span class="n">root_sub_id</span><span class="p">)</span>
+            <span class="n">next_prog_maxmass</span> <span class="o">=</span> <span class="n">get_maximum_past_mass</span><span class="p">(</span><span class="n">subtree</span><span class="p">,</span> <span class="n">next_prog_rownum</span><span class="p">)</span>
+            <span class="c"># Only if both masses are non-zero</span>
+            <span class="k">if</span> <span class="n">first_prog_maxmass</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">next_prog_maxmass</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c"># Check if major meger (mass ratio determined by maximum past mass)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">next_prog_maxmass</span> <span class="o">/</span> <span class="n">first_prog_maxmass</span> <span class="o">&gt;=</span> <span class="n">major_merger_ratio</span> <span class="ow">and</span>
+                    <span class="n">next_prog_maxmass</span> <span class="o">/</span> <span class="n">first_prog_maxmass</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">major_merger_ratio</span><span class="p">):</span>
+                    <span class="n">num_major_mergers</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c"># Next iteration</span>
+            <span class="n">next_prog_id</span> <span class="o">=</span> <span class="n">subtree</span><span class="o">.</span><span class="n">NextProgenitorID</span><span class="p">[</span><span class="n">next_prog_rownum</span><span class="p">]</span>
+
+        <span class="c"># Next iteration</span>
+        <span class="n">first_prog_id</span> <span class="o">=</span> <span class="n">subtree</span><span class="o">.</span><span class="n">FirstProgenitorID</span><span class="p">[</span><span class="n">first_prog_rownum</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">num_major_mergers</span>
+
+<span class="c"># -------------------------------- MAIN --------------------------------------</span>
+
+<span class="n">major_merger_ratio</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="mf">3.0</span>
+<span class="n">snapnum</span> <span class="o">=</span> <span class="mi">135</span>
+<span class="n">simulation</span> <span class="o">=</span> <span class="s">&#39;L75n1820FP&#39;</span>
+<span class="n">tracking</span> <span class="o">=</span> <span class="s">&#39;Galaxies&#39;</span>  <span class="c"># Subhalos (DM) or Galaxies (baryons)</span>
+<span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/</span><span class="si">%s</span><span class="s">/Illustris/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tracking</span><span class="p">,</span> <span class="n">simulation</span><span class="p">)</span>
+<span class="n">basedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/Illustris/Runs/</span><span class="si">%s</span><span class="s">/output&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">simulation</span><span class="p">)</span>
+
+<span class="c"># Look at the first few central subhalos</span>
+<span class="n">nsubs</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="k">print</span> <span class="s">&#39;Loading SUBFIND catalog...&#39;</span>
+<span class="n">cat</span> <span class="o">=</span> <span class="n">readsubfHDF5</span><span class="o">.</span><span class="n">subfind_catalog</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">snapnum</span><span class="p">,</span> <span class="n">long_ids</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GroupFirstSub&#39;</span><span class="p">])</span>
+<span class="n">subfind_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">cat</span><span class="o">.</span><span class="n">GroupFirstSub</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsubs</span><span class="p">)]</span>
+
+<span class="k">print</span> <span class="s">&#39;Creating tree instance...&#39;</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">readtreeHDF5</span><span class="o">.</span><span class="n">TreeDB</span><span class="p">(</span><span class="n">treedir</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsubs</span><span class="p">):</span>
+    <span class="n">subtree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_all_progenitors</span><span class="p">(</span><span class="n">snapnum</span><span class="p">,</span> <span class="n">subfind_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;SubhaloID&#39;</span><span class="p">,</span> <span class="s">&#39;MainLeafProgenitorID&#39;</span><span class="p">,</span> <span class="s">&#39;FirstProgenitorID&#39;</span><span class="p">,</span>
+            <span class="s">&#39;NextProgenitorID&#39;</span><span class="p">,</span> <span class="s">&#39;DescendantID&#39;</span><span class="p">,</span> <span class="s">&#39;FirstSubhaloInFOFGroupID&#39;</span><span class="p">,</span>
+            <span class="s">&#39;SubhaloMassType&#39;</span><span class="p">])</span>
+    <span class="n">num_major_mergers</span> <span class="o">=</span> <span class="n">count_major_mergers</span><span class="p">(</span><span class="n">subtree</span><span class="p">,</span> <span class="n">major_merger_ratio</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Subhalo </span><span class="si">%d</span><span class="s"> had </span><span class="si">%d</span><span class="s"> major mergers.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subfind_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">num_major_mergers</span><span class="p">)</span>
+</pre></div>
+
+      Output:
+
+<div class="highlight"><pre><span class="n">Loading</span> <span class="n">SUBFIND</span> <span class="n">catalog</span><span class="o">...</span>
+<span class="n">Creating</span> <span class="n">tree</span> <span class="n">instance</span><span class="o">...</span>
+<span class="n">Subhalo</span> <span class="mi">0</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">16937</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">30430</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">41088</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">51811</span> <span class="n">had</span> <span class="mi">1</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">59384</span> <span class="n">had</span> <span class="mi">1</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">66080</span> <span class="n">had</span> <span class="mi">4</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">73663</span> <span class="n">had</span> <span class="mi">6</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">80734</span> <span class="n">had</span> <span class="mi">3</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">86186</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">93165</span> <span class="n">had</span> <span class="mi">3</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">99148</span> <span class="n">had</span> <span class="mi">4</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">104798</span> <span class="n">had</span> <span class="mi">0</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">110566</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">114300</span> <span class="n">had</span> <span class="mi">1</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">117343</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">120615</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">123773</span> <span class="n">had</span> <span class="mi">1</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">127228</span> <span class="n">had</span> <span class="mi">5</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+<span class="n">Subhalo</span> <span class="mi">129770</span> <span class="n">had</span> <span class="mi">2</span> <span class="n">major</span> <span class="n">mergers</span><span class="o">.</span>
+</pre></div>
+
+
+      <br/>
+      <br/>
+
+
+
+
+    </div>
+  </div>
+
+</body>
+</html>
+
