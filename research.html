@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vicente Rodriguez-Gomez</title>
+  <link rel="stylesheet" href="merger_trees/treestyle.css">
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <div id="banner"></div>
+  <div id="header">
+    <div id="illustris_bar">
+      <h1 style="position:relative; left:10px;">Vicente Rodriguez-Gomez</h1>
+    </div>
+  </div>
+
+  <div id="main_container">
+
+    <ul class="navbar_left">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="merger_trees/index.html">Merger Trees</a></li>
+      <li><a href="galaxy_morphology.html">Galaxy Morphology</a></li>
+      <li><a href="synthetic_images.html">Synthetic Images</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="docs/cv.pdf">CV</a></li>
+    </ul>
+
+    <div id="normal_text" style="max-width: 1000px; margin: auto">
+
+      <table cellspacing="0" cellpadding="15" border="0">
+        <tbody>
+          <tr>
+            <td>
+              <h1 style="margin: 0px; border: 0px; padding: 0px;">Research</h1>
+            </td>
+          </tr>
+
+          <tr>
+            <td width="50%" style="vertical-align: text-top;">
+              <h2>Galactic angular momentum</h2>
+              <p>In <a href="https://ui.adsabs.harvard.edu/abs/2022MNRAS.512.5978R">Rodriguez-Gomez et al. (2022)</a>, we present a first exploration of the angular momentum content of galaxies in the IllustrisTNG cosmological simulation. In this paper, we not only show that the stellar specific angular momenta of IllustrisTNG galaxies are consistent with observational constraints, but also report some intriguing correlations between the angular momentum of a galaxy, the spin of its host dark matter halo, and the mass of the black hole at the galactic center. In particular, we show that galaxies that formed within faster spinning halos, as well as those hosting less massive black holes at their centers, tend to have a higher angular momentum content.</p>
+              
+              <p>The figure on the right shows the median galactic size (which is closely related to galactic angular momentum) as a function of galaxy stellar mass at <i>z</i> = 0, separating between galaxies that formed in halos with different spin parameter values (color scale). This figure shows that larger disks tend to form in faster spinning halos, in agreement with theoretical expectations, and that the range of spin parameters spans the observed range of galaxy sizes at fixed stellar mass.</p>
+            </td>
+            <td width="50%" align="left">
+              <img src="images/rhalf_kpc_vs_mstar_by_lambda_halo_shy_value_L75n1820TNG_099_centrals_edit.png"
+                   alt="Fig. 11 from Rodriguez-Gomez et al. (2022)."
+                   style="width: 100%; filter: invert(1) hue-rotate(180deg);" />
+            </td>
+          </tr>
+
+          <tr>
+            <td width="50%" align="right">
+              <img src="images/compare_morph_gini_vs_morph_m20_by_morph_concentration_L75n1820FP_i_final_edit.png"
+                   alt="Fig. 5 from Rodriguez-Gomez et al. (2019)."
+                   style="width: 100%; filter: invert(1) hue-rotate(180deg);" />
+            </td>
+            <td width="50%" style="vertical-align: text-top;">
+              <h2>Galactic optical morphology</h2>
+              
+              <p>In <a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.4140R">Rodriguez-Gomez et al. (2019)</a>, we carried out an "apples-to-apples" comparison between the optical morphologies of real galaxies observed with Pan-STARRS and those of simulated galaxies from the Illustris and IllustrisTNG cosmological simulations. To this end, we generated synthetic images of approximately 27,000 simulated galaxies, designed to be directly compared to Pan-STARRS observations, and ran the <i>statmorph</i> morphology code on both the real and simulated datasets. We found that the morphologies of IllustrisTNG galaxies are in good overall agreement with observations, although the IllustrisTNG model still has room for improvement regarding the morphology–color and morphology–size relations.</p>
+              
+              <p>The figure on the left shows the Gini–M20 diagram (Lotz et al. 2004) of real Pan-STARRS galaxies at <i>z</i> ~ 0.05.</p>
+
+              <p>Further information about the <i>statmorph</i> code for measuring morphological parameters of galaxy images can be found <a href="galaxy_morphology.html">here</a>, while the synthetic image generation pipeline is described in more detail <a href="synthetic_images.html">here</a>.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td width="50%" style="vertical-align: text-top;">
+              <h2>Galaxy mergers and kinematic morphology</h2>
+              <p><a href="https://ui.adsabs.harvard.edu/abs/2017MNRAS.467.3083R">Rodriguez-Gomez et al. (2017)</a> presents an exploration of the physical drivers of galaxy morphology at <i>z</i> = 0. We quantified the <i>kinematic</i> morphology of galaxies from the Illustris simulation using the <i>kappa</i> parameter (Sales et al. 2010), which measures the fraction of kinetic energy that is invested into ordered circular motion (an ideal disk would have <i>kappa</i> = 1), and compared it to various galaxy and halo properties.</p>
+              
+              <p>For massive galaxies (Mstar &gt; 10^11 Msun), we found a strong anticorrelation between kinematic morphology and the <i>ex situ</i> (accreted) stellar mass fraction, a proxy for the importance of dry mergers in a galaxy's history, as shown in the figure on the right. This result confirms, within a full cosmological volume, that dry galaxy mergers favor the formation of elliptical galaxies.</p>
+              
+              <p>On the other hand, we found that halo spin plays a more important role in the morphology of dwarf galaxies (Mstar &lt; 10^10 Msun). The morphology of Milky Way-mass galaxies, at the transition between these two regimes, is largely determined by a <i>combination</i> of galaxy mergers and halo spin.
+              </p>
+            </td>
+            <td width="50%" align="left">
+              <img src="images/compare_kappa_vs_f_acc_scatter_plus_histogram_edit.png"
+                   alt="Fig. 5 from Rodriguez-Gomez et al. (2017)."
+                   style="width: 100%; filter: invert(1) hue-rotate(180deg);" />
+            </td>
+          </tr>
+
+          <tr>
+            <td width="50%" align="right">
+              <img src="images/f_ex_situ_compare_L75n1820FP_snapnum_135_final.png"
+                   alt="Fig. 3 from Rodriguez-Gomez et al. (2016)."
+                   style="width: 100%; filter: invert(1) hue-rotate(180deg);" />
+            </td>
+            <td width="50%" style="vertical-align: text-top;">
+              <h2>Stellar mass assembly of galaxies</h2>
+              
+              <p>In <a href="https://ui.adsabs.harvard.edu/abs/2016MNRAS.458.2371R">Rodriguez-Gomez et al. (2016)</a>, we present a detailed study on the origin of individual stellar particles in the Illustris cosmological simulation – namely, whether the stellar particles were formed <i>in situ</i> (within the galaxy where they are currently found) or <i>ex situ</i> (formed in another galaxy and subsequently accreted via mergers). For the latter component, we also determine the stellar mass ratio of the merger that brought each stellar particle in. This not only allows a precise quantification of the overall contribution from mergers to galaxy growth, but also provides information about the spatial distribution of <i>in situ</i> and <i>ex situ</i> stars within each galaxy.</p>
+              
+              <p>The figure on the left presents the median <i>ex situ</i> (i.e., accreted) stellar mass fraction of Illustris galaxies as a function of stellar mass at <i>z</i> = 0, comparing our measurements to other theoretical predictions from the literature. This figure shows that the <i>ex situ</i> stellar mass fraction is a strong function of stellar mass, ranging from roughly 10% for Milky Way-mass galaxies to over 80% for the most massive galaxies in the Universe.
+              
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td width="50%" style="vertical-align: text-top;">
+              <h2>The galaxy–galaxy merger rate</h2>
+              <p><a href="https://ui.adsabs.harvard.edu/abs/2015MNRAS.449...49R">Rodriguez-Gomez et al. (2015)</a> presents a precise determination of the galaxy–galaxy merger rate in the Illustris cosmological simulation as a function of stellar mass, merger mass ratio, and redshift. We found that massive galaxies are somewhat more likely to undergo mergers than less massive objects, and that galaxy–galaxy merger rates were much higher in the past. A new algorithm for constructing merger trees (SubLink) was developed for this purpose, and is described in detail <a href="merger_trees/index.html">here</a>.</p>
+              
+              <p>The figure on the right shows the <i>major</i> (mass ratio &gt; 1/4) galaxy–galaxy merger rate of massive galaxies (descendant stellar mass &gt; 10^11 Msun) as a function of redshift. This figure shows that the predictions from the Illustris simulation (solid colored lines) are consistent with most observational constraints at <i>z</i> &lt; 3 (symbols), and that the galaxy–galaxy merger rate is a strongly increasing function of redshift.</p>
+            </td>
+            <td width="50%" align="left">
+              <img src="images/mr_vs_z_massivegals_cumulative_edit.png"
+                   alt="Fig. 9 from Rodriguez-Gomez et al. (2015)."
+                   style="width: 100%; filter: invert(1) hue-rotate(180deg);" />
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+  <br/>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
+

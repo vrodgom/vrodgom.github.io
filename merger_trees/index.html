@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Merger Trees</title>
+  <link rel="stylesheet" href="treestyle.css">
+</head>
+
+<body>
+  <div id="banner"></div>
+  <div id="header">
+    <div id="illustris_bar">
+      <h1 style="position:relative; left:10px;">Illustris Merger Trees</h1>
+    </div>
+  </div>
+
+  <div id="main_container">
+
+    <ul class="navbar_left">
+      <li><a href="../index.html">Back to Home</a></li>
+      <li><a href="index.html">Introduction</a></li>
+      <li><a href="sublink_format.html">Tree Format</a></li>
+      <li><a href="sublink_location.html">Tree Location</a></li>
+      <li><a href="examples.html">Examples</a></li>
+    </ul>
+
+    <div id="normal_text">
+      <h2>Subhalo Merger Trees</h2>
+
+      Subhalo merger trees have been created for the <a href="http://www.illustris-project.org/">Illustris</a> simulations using the SubLink code (<a href="http://adsabs.harvard.edu/abs/2015MNRAS.449...49R">Rodriguez-Gomez et al. 2015</a>). This code was featured in the <a href="http://popia.ft.uam.es/SussingMergerTrees/Home.html">Sussing Merger Trees</a> comparison project (<a href="http://adsabs.harvard.edu/abs/2013MNRAS.436..150S">Srisawat et al. 2013</a>), with favorable results. Its official website can be found on <a href="https://bitbucket.org/vrodgom/sublink">BitBucket</a>.
+      <br/>
+      <br/>
+      
+      The merger trees can be accessed in two different "modes:"
+      <ul>
+      <li><i>Database mode:</i> Quick and simple Python implementation (<a href="readtreeHDF5.py">readtreeHDF5.py</a>). This is enough for most purposes.</li>
+      <li><i>Linked-list mode:</i> A more powerful approach, but it can only be implemented efficiently in C++ due to memory limitations. Feel free to contact me to obtain the C++ code for doing this.</li>
+      </ul>
+
+      <h2>Python usage example</h2>
+
+      The following example inside an IPython interactive session imports the <a href="readtreeHDF5.py">readtreeHDF5.py</a> Python script and then reads the stellar mass history of a subhalo:
+
+      <br/>
+      <br/>
+
+<div class="highlight"><pre>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">readtreeHDF5</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">treedir</span> <span class="o">=</span> <span class="s">&#39;/n/ghernquist/vrodrigu/MergerTrees/output/Subhalos/Illustris/L75n1820FP&#39;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">readtreeHDF5</span><span class="o">.</span><span class="n">TreeDB</span><span class="p">(</span><span class="n">treedir</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">snapnum</span> <span class="o">=</span> <span class="mi">135</span><span class="p">;</span> <span class="n">subfind_id</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_main_branch</span><span class="p">(</span><span class="n">snapnum</span><span class="p">,</span> <span class="n">subfind_id</span><span class="p">,</span> <span class="n">keysel</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;SubhaloMassType&#39;</span><span class="p">])</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">branch</span><span class="o">.</span><span class="n">SubhaloMassType</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">6</span><span class="p">]:</span> 
+<span class="n">array</span><span class="p">([</span>  <span class="mf">2.33393616e+02</span><span class="p">,</span>   <span class="mf">2.36594543e+02</span><span class="p">,</span>   <span class="mf">2.31190689e+02</span><span class="p">,</span>
+         <span class="mf">2.28168961e+02</span><span class="p">,</span>   <span class="mf">2.25794037e+02</span><span class="p">,</span>   <span class="mf">2.25409058e+02</span><span class="p">,</span>
+         <span class="mf">2.18946014e+02</span><span class="p">,</span>   <span class="mf">2.17864563e+02</span><span class="p">,</span>   <span class="mf">2.11786011e+02</span><span class="p">,</span>
+         <span class="mf">2.10338608e+02</span><span class="p">,</span>   <span class="mf">2.05883530e+02</span><span class="p">,</span>   <span class="mf">2.05351608e+02</span><span class="p">,</span>
+         <span class="mf">2.06869431e+02</span><span class="p">,</span>   <span class="mf">2.02407578e+02</span><span class="p">,</span>   <span class="mf">2.03302048e+02</span><span class="p">,</span>
+         <span class="mf">1.95617722e+02</span><span class="p">,</span>   <span class="mf">1.90876785e+02</span><span class="p">,</span>   <span class="mf">1.90310043e+02</span><span class="p">,</span>
+         <span class="mf">1.89997925e+02</span><span class="p">,</span>   <span class="mf">1.90455124e+02</span><span class="p">,</span>   <span class="mf">1.85761642e+02</span><span class="p">,</span>
+         <span class="mf">1.86246506e+02</span><span class="p">,</span>   <span class="mf">1.85166718e+02</span><span class="p">,</span>   <span class="mf">1.85115265e+02</span><span class="p">,</span>
+         <span class="mf">1.85175873e+02</span><span class="p">,</span>   <span class="mf">1.84385437e+02</span><span class="p">,</span>   <span class="mf">1.85189850e+02</span><span class="p">,</span>
+         <span class="mf">1.82988495e+02</span><span class="p">,</span>   <span class="mf">1.82881836e+02</span><span class="p">,</span>   <span class="mf">1.80221802e+02</span><span class="p">,</span>
+         <span class="mf">1.81669479e+02</span><span class="p">,</span>   <span class="mf">1.84483536e+02</span><span class="p">,</span>   <span class="mf">1.76489914e+02</span><span class="p">,</span>
+         <span class="mf">1.73764557e+02</span><span class="p">,</span>   <span class="mf">1.72029312e+02</span><span class="p">,</span>   <span class="mf">1.67181274e+02</span><span class="p">,</span>
+         <span class="mf">1.65797485e+02</span><span class="p">,</span>   <span class="mf">1.52316513e+02</span><span class="p">,</span>   <span class="mf">1.41573288e+02</span><span class="p">,</span>
+         <span class="mf">1.43456469e+01</span><span class="p">,</span>   <span class="mf">1.11532280e+02</span><span class="p">,</span>   <span class="mf">1.02701935e+02</span><span class="p">,</span>
+         <span class="mf">1.01446526e+02</span><span class="p">,</span>   <span class="mf">1.01805817e+02</span><span class="p">,</span>   <span class="mf">1.03256004e+02</span><span class="p">,</span>
+         <span class="mf">8.91545715e+01</span><span class="p">,</span>   <span class="mf">7.94949036e+01</span><span class="p">,</span>   <span class="mf">7.89413147e+01</span><span class="p">,</span>
+         <span class="mf">7.83848801e+01</span><span class="p">,</span>   <span class="mf">7.76846542e+01</span><span class="p">,</span>   <span class="mf">8.11160507e+01</span><span class="p">,</span>
+         <span class="mf">6.58123627e+01</span><span class="p">,</span>   <span class="mf">6.66783981e+01</span><span class="p">,</span>   <span class="mf">5.75135651e+01</span><span class="p">,</span>
+         <span class="mf">5.16523438e+01</span><span class="p">,</span>   <span class="mf">4.66071243e+01</span><span class="p">,</span>   <span class="mf">4.31353264e+01</span><span class="p">,</span>
+         <span class="mf">3.82537384e+01</span><span class="p">,</span>   <span class="mf">3.63100281e+01</span><span class="p">,</span>   <span class="mf">3.69525604e+01</span><span class="p">,</span>
+         <span class="mf">3.31881142e+01</span><span class="p">,</span>   <span class="mf">3.28055305e+01</span><span class="p">,</span>   <span class="mf">3.14911003e+01</span><span class="p">,</span>
+         <span class="mf">2.92666035e+01</span><span class="p">,</span>   <span class="mf">2.56113510e+01</span><span class="p">,</span>   <span class="mf">2.16436481e+01</span><span class="p">,</span>
+         <span class="mf">1.92428932e+01</span><span class="p">,</span>   <span class="mf">1.65285492e+01</span><span class="p">,</span>   <span class="mf">1.54052744e+01</span><span class="p">,</span>
+         <span class="mf">1.39484034e+01</span><span class="p">,</span>   <span class="mf">1.19876518e+01</span><span class="p">,</span>   <span class="mf">1.05805073e+01</span><span class="p">,</span>
+         <span class="mf">9.63882637e+00</span><span class="p">,</span>   <span class="mf">8.26193523e+00</span><span class="p">,</span>   <span class="mf">6.77282429e+00</span><span class="p">,</span>
+         <span class="mf">6.34307098e+00</span><span class="p">,</span>   <span class="mf">6.18107319e+00</span><span class="p">,</span>   <span class="mf">5.72066116e+00</span><span class="p">,</span>
+         <span class="mf">5.20444489e+00</span><span class="p">,</span>   <span class="mf">4.04215097e+00</span><span class="p">,</span>   <span class="mf">2.27483058e+00</span><span class="p">,</span>
+         <span class="mf">1.07108188e+00</span><span class="p">,</span>   <span class="mf">8.07452261e-01</span><span class="p">,</span>   <span class="mf">5.13630271e-01</span><span class="p">,</span>
+         <span class="mf">4.51999515e-01</span><span class="p">,</span>   <span class="mf">3.17362517e-01</span><span class="p">,</span>   <span class="mf">2.31387287e-01</span><span class="p">,</span>
+         <span class="mf">1.89680010e-01</span><span class="p">,</span>   <span class="mf">1.57841980e-01</span><span class="p">,</span>   <span class="mf">1.18739337e-01</span><span class="p">,</span>
+         <span class="mf">5.85642345e-02</span><span class="p">,</span>   <span class="mf">2.95610856e-02</span><span class="p">,</span>   <span class="mf">1.85859483e-02</span><span class="p">,</span>
+         <span class="mf">1.19343642e-02</span><span class="p">,</span>   <span class="mf">6.79354137e-03</span><span class="p">,</span>   <span class="mf">3.85794253e-03</span><span class="p">,</span>
+         <span class="mf">2.25251797e-03</span><span class="p">,</span>   <span class="mf">1.84609054e-03</span><span class="p">,</span>   <span class="mf">1.59247383e-03</span><span class="p">,</span>
+         <span class="mf">1.31974125e-03</span><span class="p">,</span>   <span class="mf">6.94582006e-04</span><span class="p">,</span>   <span class="mf">7.08998181e-04</span><span class="p">,</span>
+         <span class="mf">6.46255910e-04</span><span class="p">,</span>   <span class="mf">4.01783938e-04</span><span class="p">,</span>   <span class="mf">2.08377212e-04</span><span class="p">,</span>
+         <span class="mf">9.75056755e-05</span><span class="p">,</span>   <span class="mf">1.05029045e-04</span><span class="p">,</span>   <span class="mf">0.00000000e+00</span><span class="p">,</span>
+         <span class="mf">0.00000000e+00</span><span class="p">,</span>   <span class="mf">0.00000000e+00</span><span class="p">,</span>   <span class="mf">0.00000000e+00</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+
+</pre></div>
+
+      <br/>
+      <hr/>
+      <table border="0" style="background-color:#444444" width="100%" cellpadding="5" cellspacing="0">
+        <tr>
+          <td align="left">
+            <i>Last updated:</i> October 20, 2017
+          </td>
+          <td align="right">
+            <i>Picture credit:</i> Greg Snyder
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+</body>
+</html>
+
